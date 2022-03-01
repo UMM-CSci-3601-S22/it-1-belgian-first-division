@@ -1,0 +1,38 @@
+[
+  {
+    "name": "apple",
+    "quantity": 4,
+    "brand": "",
+    "comment": "I like these apples"
+  },
+  {
+    "name": "grapes",
+    "quantity": 1,
+    "brand": "",
+    "comment": "These are the best grapes"
+  },
+  {
+    "name": "potatoes",
+    "quantity": 2,
+    "brand": "",
+    "comment": "For mashed potaters"
+  },
+  {
+    "name": "Variety Pack of plain potato chips",
+    "quantity": 1,
+    "brand": "Old Dutch ",
+    "comment": "conniestewart@ohmnet.com"
+  },
+  {
+    "name": "Cheese pizza",
+    "quantity": 3,
+    "brand": "Red Baron",
+    "comment": ""
+  },
+  {
+    "name": "Coconut Milk",
+    "quantity": 1,
+    "brand": "",
+    "comment": ""
+  }
+]
