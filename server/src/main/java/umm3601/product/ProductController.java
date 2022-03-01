@@ -30,6 +30,47 @@ import io.javalin.http.NotFoundResponse;
 
 public class ProductController
 {
-  
 
+  private static final String NAME_KEY = "name";
+  //private static final String BRAND_KEY = "brand"; --One Day
+
+  private final JacksonMongoCollection<Product> productCollection;
+
+  public ProductController(MongoDatabase database) {
+    productCollection = JacksonMongoCollection.builder().build(
+        database,
+        "products",
+        Product.class,
+        UuidRepresentation.STANDARD);
+  }
+
+  public void getProducts(Context ctx) {
+    Bson combinedFilter = constructFilter(ctx);
+
+    // All three of the find, sort, and into steps happen "in parallel" inside the
+    // database system. So MongoDB is going to find the products with the specified
+    // properties, return those sorted in the specified manner, and put the
+    // results into an initially empty ArrayList.
+    ArrayList<Product> matchingProducts = productCollection
+      .find(combinedFilter)
+      .into(new ArrayList<>());
+
+    // Set the JSON body of the response to be the list of products returned by
+    // the database.
+    ctx.json(matchingProducts);
+  }
+
+  private Bson constructFilter(Context ctx) {
+    List<Bson> filters = new ArrayList<>(); // start with a blank document
+
+    if (ctx.queryParamMap().containsKey(NAME_KEY)) {
+        int targetAge = ctx.queryParamAsClass(NAME_KEY, Integer.class).get();
+        filters.add(eq(NAME_KEY, targetAge));
+    }
+
+    // Combine the list of filters into a single filtering document.
+    Bson combinedFilter = filters.isEmpty() ? new Document() : and(filters);
+
+    return combinedFilter;
+  }
 }

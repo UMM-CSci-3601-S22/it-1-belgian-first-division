@@ -191,7 +191,7 @@ public class ProductControllerSpec {
 
 
   @Test
-  public void canGetAllProducts() {
+  public void canGetAllProducts() throws IOException {
 
     String path = "api/products";
     Context ctx = mockContext(path);
@@ -210,7 +210,7 @@ public class ProductControllerSpec {
   }
 
   @Test
-  public void canGetProductWithNameApple() {
+  public void canGetProductWithNameApple() throws IOException {
 
     mockReq.setQueryString("name=apple");
     String path = "api/products";
