@@ -8,6 +8,8 @@
 > [`CODE-QUALITY-CHECKS.md`](CODE-QUALITY-CHECKS.md)
 > for info on how to do that.
 >
+> You should do this right away.
+>
 > Feel free to remove the badge above and this text when you've
 > dealt with that.
 
