@@ -64,8 +64,7 @@ public class ProductController
     List<Bson> filters = new ArrayList<>(); // start with a blank document
 
     if (ctx.queryParamMap().containsKey(NAME_KEY)) {
-        int targetAge = ctx.queryParamAsClass(NAME_KEY, Integer.class).get();
-        filters.add(eq(NAME_KEY, targetAge));
+        filters.add(eq(NAME_KEY, ctx.queryParam(NAME_KEY)));
     }
 
     // Combine the list of filters into a single filtering document.

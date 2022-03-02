@@ -120,6 +120,8 @@ public class ProductControllerSpec {
             .append("comment", "We love Conner's Potatoes!"));
 
     productDocuments.insertMany(testProducts);
+
+    productController = new ProductController(db);
   }
 
   /**
