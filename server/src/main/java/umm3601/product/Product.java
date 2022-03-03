@@ -7,11 +7,11 @@ import org.mongojack.ObjectId;
 public class Product {
 
   @ObjectId @Id
-  String _id;
+  public String _id;
 
-  String name;
-  String brand; // brand can be empty.
-  Double quantity; // can be 0
-  String comment; // can be empty
+  public String name;
+  public String brand; // brand can be empty.
+  public Double quantity; // can be 0
+  public String comment; // can be empty
 
 }
