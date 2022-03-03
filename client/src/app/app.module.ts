@@ -57,6 +57,7 @@ import { AddUserComponent } from './users/add-user.component';
 import { ProductProfileComponent } from './products//product-profile.component';
 import { ProductListComponent } from './products/product-list.component';
 import { ProductCardComponent } from './products/product-card.component';
+import { ProductService } from './products/product.service';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -76,7 +77,6 @@ const MATERIAL_MODULES: any[] = [
   MatDividerModule,
   MatRadioModule,
   MatSnackBarModule,
-  MatButton,
   MatCard,
   MatCardActions,
   MatCardContent,
@@ -84,6 +84,7 @@ const MATERIAL_MODULES: any[] = [
   MatCardSubtitle,
   MatCardHeader,
   MatIcon,
+  MatButton,
   MatLabel,
   MatRadioButton,
   MatRadioGroup,
@@ -124,7 +125,8 @@ const MATERIAL_MODULES: any[] = [
     LayoutModule,
   ],
   providers: [
-    UserService
+    UserService,
+    ProductService,
   ],
   bootstrap: [AppComponent]
 })
