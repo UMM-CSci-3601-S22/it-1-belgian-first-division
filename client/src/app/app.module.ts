@@ -32,6 +32,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { UserCardComponent } from './users/user-card.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
+import { ProductProfileComponent } from './products/product-profile/product-profile.component';
+import { ProductListComponent } from './products/product-list/product-list.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -60,6 +62,8 @@ const MATERIAL_MODULES: any[] = [
     UserCardComponent,
     UserProfileComponent,
     AddUserComponent,
+    ProductProfileComponent,
+    ProductListComponent,
   ],
   imports: [
     BrowserModule,
