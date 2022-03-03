@@ -20,9 +20,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButton } from '@angular/material/button';
 import { MatCardContent } from '@angular/material/card';
 import { MatCard } from '@angular/material/card';
@@ -55,7 +55,8 @@ import { UserCardComponent } from './users/user-card.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
 import { ProductProfileComponent } from './products//product-profile.component';
-import { ProductListComponent } from './products//product-list.component';
+import { ProductListComponent } from './products/product-list.component';
+import { ProductCardComponent } from './products/product-card.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -109,6 +110,7 @@ const MATERIAL_MODULES: any[] = [
     AddUserComponent,
     ProductProfileComponent,
     ProductListComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,
