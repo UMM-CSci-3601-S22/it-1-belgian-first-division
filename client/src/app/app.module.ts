@@ -23,6 +23,28 @@ import { MatOptionModule } from '@angular/material/core';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatButton } from '@angular/material/button';
+import { MatCardContent } from '@angular/material/card';
+import { MatCard } from '@angular/material/card';
+import { MatCardTitle } from '@angular/material/card';
+import { MatCardSubtitle } from '@angular/material/card';
+import { MatCardHeader } from '@angular/material/card';
+import { RouterOutlet } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatSidenavContent } from '@angular/material/sidenav';
+import { MatNavList } from '@angular/material/list';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenavContainer } from '@angular/material/sidenav';
+import { MatCardActions } from '@angular/material/card';
+import { MatError } from '@angular/material/form-field';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatLabel } from '@angular/material/form-field';
+import { MatFormField } from '@angular/material/form-field';
+import { MatHint } from '@angular/material/form-field';
+import { MatRadioButton } from '@angular/material/radio';
+import { MatRadioGroup } from '@angular/material/radio';
 
 import { UserListComponent } from './users/user-list.component';
 import { HomeComponent } from './home/home.component';
@@ -32,8 +54,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { UserCardComponent } from './users/user-card.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
-import { ProductProfileComponent } from './products/product-profile/product-profile.component';
-import { ProductListComponent } from './products/product-list/product-list.component';
+import { ProductProfileComponent } from './products//product-profile.component';
+import { ProductListComponent } from './products//product-list.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -45,13 +67,36 @@ const MATERIAL_MODULES: any[] = [
   MatSidenavModule,
   MatInputModule,
   MatExpansionModule,
+  MatListModule,
   MatTooltipModule,
   MatSelectModule,
   MatOptionModule,
   MatFormFieldModule,
   MatDividerModule,
   MatRadioModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatButton,
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardTitle,
+  MatCardSubtitle,
+  MatCardHeader,
+  MatIcon,
+  MatLabel,
+  MatRadioButton,
+  MatRadioGroup,
+  MatToolbar,
+  RouterOutlet,
+  MatSidenavContainer,
+  MatSidenav,
+  MatSidenavContent,
+  MatError,
+  MatNavList,
+  MatOption,
+  MatSelect,
+  MatFormField,
+  MatHint
 ];
 
 @NgModule({
