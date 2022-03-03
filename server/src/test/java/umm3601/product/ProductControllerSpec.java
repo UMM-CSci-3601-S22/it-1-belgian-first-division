@@ -214,7 +214,7 @@ public class ProductControllerSpec {
   @Test
   public void canGetProductWithNameApple() throws IOException {
 
-    mockReq.setQueryString("name=apple");
+    mockReq.setQueryString("name=Apple");
     String path = "api/products";
     Context ctx = mockContext(path);
 
