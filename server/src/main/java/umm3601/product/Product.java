@@ -1,7 +1,5 @@
 package umm3601.product;
 
-import javax.swing.ImageIcon;
-
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
@@ -9,6 +7,8 @@ import org.mongojack.ObjectId;
 public class Product {
 
   @ObjectId @Id
+
+  @SuppressWarnings({"MemberName"})
   public String _id;
 
   public String product_name;

@@ -235,10 +235,6 @@ public class ProductControllerSpec {
     // the class HttpCode.
     assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
     assertEquals(1, returnedProducts.length);
-    assertEquals(
-      db.getCollection("products").countDocuments(),
-      returnedProducts.length
-    );
   }
 
 }
