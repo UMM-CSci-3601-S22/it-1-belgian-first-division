@@ -27,6 +27,12 @@ describe('App', () => {
     cy.url().should('match', /^https?:\/\/[^\/]+\/?$/);
     page.getSidenav()
       .should('be.hidden');
+
+    page.getSidenavButton().click();
+    page.getNavLink('Pantry').click();
+    cy.url().should('match', /\/products$/);
+    page.getSidenav()
+      .should('be.hidden');
   });
 
 });
