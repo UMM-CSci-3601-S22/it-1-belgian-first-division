@@ -20,11 +20,6 @@ public class Product {
   public String store;
   public String location;
   public String notes; // can be empty
-  public String[] tags;
-
-  /*
-  public ImageIcon image; // this might not be the correct type for an image.
-  This also made the tests fail.  I don't know how the other groups are doing this.
-  */
-
+  public int lifespan;
+  public int threshold;
 }
