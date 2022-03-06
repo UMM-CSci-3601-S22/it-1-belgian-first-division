@@ -58,6 +58,7 @@ import org.junit.jupiter.api.Test;
 public class MongoSpec {
 
   private MongoCollection<Document> userDocuments;
+  private MongoCollection<Document> productDocuments;
 
   private static MongoClient mongoClient;
   private static MongoDatabase db;
@@ -106,6 +107,39 @@ public class MongoSpec {
         .append("email", "jamie@frogs.com"));
 
     userDocuments.insertMany(testUsers);
+
+    productDocuments = db.getCollection("products");
+    productDocuments.drop();
+    List<Document> testProducts = new ArrayList<>();
+    testProducts.add(
+        new Document()
+            .append("product_name", "Apple")
+            .append("description", "these are the apples i like.")
+            .append("brand", "UMM")
+            .append("category", "fruit")
+            .append("store", "Apple Store")
+            .append("location", "here")
+            .append("notes", "These are good apples."));
+    testProducts.add(
+        new Document()
+            .append("product_name", "Grapes")
+            .append("description", "these are the grapes i like.")
+            .append("brand", "Generic")
+            .append("category", "fruit")
+            .append("store", "Grape Store")
+            .append("location", "there")
+            .append("notes", "These are good grapes."));
+    testProducts.add(
+        new Document()
+            .append("product_name", "Potatoes")
+            .append("description", "I like these potatoes.")
+            .append("brand", "Conner's Potatoes")
+            .append("category", "produce")
+            .append("store", "Farmer's Market")
+            .append("location", "everywhere")
+            .append("notes", "We love Conner's Potatoes!"));
+
+    productDocuments.insertMany(testProducts);
   }
 
   private List<Document> intoList(MongoIterable<Document> documents) {
