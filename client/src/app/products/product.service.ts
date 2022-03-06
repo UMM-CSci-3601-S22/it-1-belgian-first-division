@@ -31,7 +31,7 @@ export class ProductService {
 
     if (filters) {
       if (filters.name) {
-        httpParams = httpParams.set('productName', filters.name);
+        httpParams = httpParams.set('product_name', filters.name);
       }
     }
 
