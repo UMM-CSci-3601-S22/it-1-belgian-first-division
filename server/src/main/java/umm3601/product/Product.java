@@ -11,7 +11,9 @@ public class Product {
   @SuppressWarnings({"MemberName"})
   public String _id;
 
-  public String productName;
+  @SuppressWarnings({"MemberName"})
+  public String product_name;
+
   public String description;
   public String brand; // brand can be empty.
   public String category;
