@@ -237,4 +237,20 @@ public class ProductControllerSpec {
     assertEquals(1, returnedProducts.length);
   }
 
+  @Test
+  public void addProduct() throws IOException {
+
+    String testNewProduct = "{"
+        + "\"product_name\": \"Turkey - XXL\","
+        + "\"description\": 25,"
+        + "\"brand\": \"testers\","
+        + "\"category\": \"test@example.com\","
+        + "\"store\": \"viewer\""
+        + "\"location\": \"Willie's\""
+        + "\"notes\": \"Don't eat the turkey bro\""
+        + "}";
+    mockReq.setBodyContent(testNewUser);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/users");
 }
