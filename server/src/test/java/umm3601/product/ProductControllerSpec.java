@@ -1,23 +1,23 @@
 package umm3601.product;
 
-//import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.eq;
 import static io.javalin.plugin.json.JsonMapperKt.JSON_MAPPER_KEY;
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.junit.jupiter.api.Assertions.assertNotEquals;
-// import static org.junit.jupiter.api.Assertions.assertNotNull;
-// import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 // import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
-//import java.net.HttpURLConnection;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-//import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mongodb.MongoClientSettings;
@@ -28,14 +28,14 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
-//import org.bson.types.ObjectId;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.javalin.core.JavalinConfig;
-// import io.javalin.core.validation.ValidationException;
+import io.javalin.core.validation.ValidationException;
 // import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
@@ -237,4 +237,129 @@ public class ProductControllerSpec {
     assertEquals(1, returnedProducts.length);
   }
 
+  @Test
+  public void addProduct() throws IOException {
+
+    String testNewProduct = "{"
+        + "\"product_name\": \"Turkey - XXL\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"Willie's\""
+        + "\"location\": \"Meat Market\""
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    productController.addNewProduct(ctx);
+    String result = ctx.resultString();
+    String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
+
+    // Our status should be 201, i.e., our new product was successfully
+    // created. This is a named constant in the class HttpURLConnection.
+    assertEquals(HttpURLConnection.HTTP_CREATED, mockRes.getStatus());
+
+    // Successfully adding the product should return the newly generated MongoDB ID
+    // for that product.
+    assertNotEquals("", id);
+    assertEquals(1, db.getCollection("products").countDocuments(eq("_id", new ObjectId(id))));
+
+    // Verify that the product was added to the database with the correct ID
+    Document addedProduct = db.getCollection("products").find(eq("_id", new ObjectId(id))).first();
+
+    assertNotNull(addedProduct);
+    assertEquals("Turkey - XXL", addedProduct.getString("product_name"));
+    assertEquals("Homegrown Morris Turkey", addedProduct.getString("description"));
+    assertEquals("The CSCI Dungeon", addedProduct.getString("brand"));
+    assertEquals("meat", addedProduct.getString("category"));
+    assertEquals("Willie's", addedProduct.getString("store"));
+    assertEquals("Meat Market", addedProduct.getString("location"));
+    assertEquals("Don't eat the turkey Nic McPhee", addedProduct.getString("notes"));
+  }
+
+  @Test
+  public void addNullNameProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"Willie's\""
+        + "\"location\": \"Meat Market\""
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addInvalidNameProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"product name\": \"\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"Willie's\""
+        + "\"location\": \"Meat Market\""
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addInvalidStoreProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"product_name\": \"Turkey - XXL\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"\""
+        + "\"location\": \"Meat Market\""
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addInvalidLocationProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"product_name\": \"Turkey - XXL\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"Willie's\""
+        + "\"location\": \"\""
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
 }

@@ -5,8 +5,8 @@ import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Map;
 //import java.util.Objects;
+import java.util.Map;
 
 import com.mongodb.client.MongoDatabase;
 //import com.mongodb.client.model.Sorts;
@@ -21,6 +21,7 @@ import org.mongojack.JacksonMongoCollection;
 import io.javalin.http.Context;
 // import io.javalin.http.HttpCode;
 // import io.javalin.http.NotFoundResponse;
+import io.javalin.http.HttpCode;
 
 public class ProductController {
 
@@ -64,5 +65,31 @@ public class ProductController {
     Bson combinedFilter = filters.isEmpty() ? new Document() : and(filters);
 
     return combinedFilter;
+  }
+
+  public void addNewProduct(Context ctx) {
+    /*
+     * The follow chain of statements uses the Javalin validator system
+     * to verify that instance of `Product` provided in this context is
+     * a "legal" product. It checks the following things (in order):
+     *    - The product has a value for the name (`usr.name != null`)
+     *    - The product name is not blank (`usr.name.length > 0`)
+     *    - The store is assumed to not be blank ('usr.store.length > 0')
+     *    - The location is assumed to not be blank ('usr.location.length > 0')
+     */
+    Product newProduct = ctx.bodyValidator(Product.class)
+      .check(usr -> usr.product_name != null && usr.product_name.length() > 0, "Product must have a non-empty product name")
+      .check(usr -> usr.store != null && usr.store.length() > 0, "Store must have a non-empty store name")
+      .check(usr -> usr.location != null && usr.location.length() > 0, "Product must have a non-empty location name")
+      .get();
+
+    productCollection.insertOne(newProduct);
+
+    // 201 is the HTTP code for when we successfully
+    // create a new resource (a user in this case).
+    // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+    // for a description of the various response codes.
+    ctx.status(HttpCode.CREATED);
+    ctx.json(Map.of("product name", newProduct.product_name));
   }
 }

@@ -12,19 +12,15 @@ public class Product {
   public String _id;
 
   @SuppressWarnings({"MemberName"})
-  public String product_name;
+  public String product_name; // required
 
-  public String description;
+  public String description; // Can empty
   public String brand; // brand can be empty.
-  public String category;
-  public String store;
-  public String location;
+  public String category; // Can be empty
+  public String store; // Assume it's not empty
+  public String location; // Assume it's not empty
   public String notes; // can be empty
-  public String[] tags;
-
-  /*
-  public ImageIcon image; // this might not be the correct type for an image.
-  This also made the tests fail.  I don't know how the other groups are doing this.
-  */
+  public int lifespan; // can be empty
+  public int threshold; // can be empty
 
 }
