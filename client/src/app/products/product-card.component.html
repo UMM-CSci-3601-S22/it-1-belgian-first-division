@@ -1,3 +1,16 @@
-<div>
-  <title>{{product.name}}</title>
-</div>
+<mat-card>
+  <mat-card-title>{{product.name}}</mat-card-title>
+  <mat-card-subtitle>{{product.brand}}</mat-card-subtitle>
+  <mat-card-subtitle>{{product.description}}</mat-card-subtitle>
+
+  <mat-card-content>
+    <h2>{{product.category}}</h2>
+    <h2>{{product.store}}</h2>
+    <p>{{product.location}}</p>
+
+    <div>
+      <h2>Notes</h2>
+      <p>{{product.notes}}</p>
+    </div>
+  </mat-card-content>
+</mat-card>
