@@ -20,4 +20,6 @@ public class Product {
   public String store;
   public String location;
   public String notes; // can be empty
+  public int lifespan;
+  public int threshold;
 }
