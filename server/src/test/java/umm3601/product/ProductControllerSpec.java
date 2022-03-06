@@ -102,22 +102,31 @@ public class ProductControllerSpec {
     List<Document> testProducts = new ArrayList<>();
     testProducts.add(
         new Document()
-            .append("name", "Apple")
-            .append("quantity", 25)
+            .append("product_name", "Apple")
+            .append("description", "these are the apples i like.")
             .append("brand", "UMM")
-            .append("comment", "These are good apples."));
+            .append("category", "fruit")
+            .append("store", "Apple Store")
+            .append("location", "here")
+            .append("notes", "These are good apples."));
     testProducts.add(
         new Document()
-            .append("name", "Grape")
-            .append("quantity", 1)
-            .append("brand", "")
-            .append("comment", "Grapes are tasty"));
+            .append("product_name", "Grapes")
+            .append("description", "these are the grapes i like.")
+            .append("brand", "Generic")
+            .append("category", "fruit")
+            .append("store", "Grape Store")
+            .append("location", "there")
+            .append("notes", "These are good grapes."));
     testProducts.add(
         new Document()
-            .append("name", "Potato")
-            .append("quantity", 2)
+            .append("product_name", "Potatoes")
+            .append("description", "I like these potatoes.")
             .append("brand", "Conner's Potatoes")
-            .append("comment", "We love Conner's Potatoes!"));
+            .append("category", "produce")
+            .append("store", "Farmer's Market")
+            .append("location", "everywhere")
+            .append("notes", "We love Conner's Potatoes!"));
 
     productDocuments.insertMany(testProducts);
 
@@ -214,7 +223,7 @@ public class ProductControllerSpec {
   @Test
   public void canGetProductWithNameApple() throws IOException {
 
-    mockReq.setQueryString("name=Apple");
+    mockReq.setQueryString("product_name=Apple");
     String path = "api/products";
     Context ctx = mockContext(path);
 
