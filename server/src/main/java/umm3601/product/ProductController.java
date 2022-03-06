@@ -24,7 +24,7 @@ import io.javalin.http.Context;
 
 public class ProductController {
 
-  private static final String NAME_KEY = "product_name";
+  private static final String NAME_KEY = "productName";
   //private static final String BRAND_KEY = "brand"; --One Day
 
   private final JacksonMongoCollection<Product> productCollection;
