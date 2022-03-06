@@ -6,7 +6,7 @@ describe('App', () => {
   beforeEach(() => page.navigateTo());
 
   it('Should have the correct title', () => {
-    page.getAppTitle().should('contain', 'Panantry');
+    page.getAppTitle().should('contain', 'Handy Pantry');
   });
 
   it('The sidenav should open, navigate to "Users" and back to "Home"', () => {
