@@ -2,8 +2,11 @@ export interface Product {
 
   _id: string;
   name: string;
-  brand: string;
-  quantity: number;
-  comment: string;
-
+  description?: string;
+  brand?: string;
+  category?: string;
+  store?: string;
+  location?: string;
+  notes?: string;
+  tags?: string[];
 }
