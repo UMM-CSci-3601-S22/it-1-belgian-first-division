@@ -8,8 +8,9 @@
         <div fxLayout="row wrap" fxLayoutGap="10px">
 
           <mat-form-field class="input-field">
-            <mat-label>name</mat-label>
-            <h2> This is where the input should be</h2>
+            <mat-label>Name</mat-label>
+            <input matInput data-test="productNameInput" placeholder="Filter by product name"
+            [(ngModel)]="productName" (input)="updateFilter()">
             <mat-hint>Search for product by name</mat-hint>
           </mat-form-field>
 

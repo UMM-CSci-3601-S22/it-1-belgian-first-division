@@ -1,16 +1,18 @@
-<mat-card>
-  <mat-card-title>{{product.name}}</mat-card-title>
-  <mat-card-subtitle>{{product.brand}}</mat-card-subtitle>
-  <mat-card-subtitle>{{product.description}}</mat-card-subtitle>
+<mat-card class="product-card" *ngIf="this.product">
+  <mat-card-header>
+    <mat-card-title class="product-card-name">{{this.product.name}}</mat-card-title>
+    <mat-card-subtitle class="product-card-brand">{{this.product.brand}}</mat-card-subtitle>
+    <mat-card-subtitle class="product-card-description">{{this.product.description}}</mat-card-subtitle>
+  </mat-card-header>
 
-  <mat-card-content>
-    <h2>{{product.category}}</h2>
-    <h2>{{product.store}}</h2>
-    <p>{{product.location}}</p>
+  <mat-card-content *ngIf="!this.simple">
+    <h2>Category: {{this.product.category}}</h2>
+    <h2>Store: {{this.product.store}}</h2>
+    <p>Location: {{this.product.location}}</p>
 
     <div>
       <h2>Notes</h2>
-      <p>{{product.notes}}</p>
+      <p>{{this.product.notes}}</p>
     </div>
   </mat-card-content>
 </mat-card>

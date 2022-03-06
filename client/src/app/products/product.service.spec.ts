@@ -84,7 +84,7 @@ it('getProducts() calls api/products with filter param \'product_name\'', () => 
 it('filterProducts() filters by name', () => {
   expect(testProducts.length).toBe(3);
   const productName = 'a';
-  expect(productService.filterProducts(testProducts, {name: productName}).length).toBe(3);
+  expect(productService.filterProducts(testProducts, {name: productName }).length).toBe(3);
 });
 
 });

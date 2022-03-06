@@ -20,13 +20,13 @@ export class ProductService {
     // Filter by name
     if (filters.name) {
 
-      filteredProducts = filteredProducts.filter(product => product.name.indexOf(filters.name) !== -1);
+      filteredProducts = filteredProducts.filter(product => product.name.toLowerCase().indexOf(filters.name) !== -1);
     }
 
     return filteredProducts;
   }
 
-  getProducts(filters?: { name: string }): Observable<Product[]> {
+  getProducts(filters?: { name?: string }): Observable<Product[]> {
     let httpParams: HttpParams = new HttpParams();
 
     if (filters) {
