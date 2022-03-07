@@ -298,7 +298,74 @@ public class ProductControllerSpec {
         + "\"category\": \"meat\","
         + "\"store\": \"Willie's\""
         + "\"location\": \"Meat Market\""
-        + "\"notes\": \"Don't eat the turkey Nic McPhee\""
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
+        + "\"lifespan\": 10,"
+        + "\"threshold\": 10"
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addNullStoreProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"name\": \"Turkey - XXL\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"location\": \"Meat Market\""
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
+        + "\"lifespan\": 10,"
+        + "\"threshold\": 10"
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addNullLocationProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"name\": \"Turkey - XXL\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"Willie's\""
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
+        + "\"lifespan\": 10,"
+        + "\"threshold\": 10"
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addNullLifespanProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"name\": \"Turkey - XXL\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"Willie's\","
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
+        + "\"threshold\": 10"
         + "}";
     mockReq.setBodyContent(testNewProduct);
     mockReq.setMethod("POST");
@@ -317,8 +384,8 @@ public class ProductControllerSpec {
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
-        + "\"store\": \"Willie's\""
-        + "\"location\": \"Meat Market\""
+        + "\"store\": \"Willie's\","
+        + "\"location\": \"Meat Market\","
         + "\"notes\": \"Don't eat the turkey Nic McPhee\""
         + "}";
     mockReq.setBodyContent(testNewProduct);
@@ -338,8 +405,8 @@ public class ProductControllerSpec {
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
-        + "\"store\": \"\""
-        + "\"location\": \"Meat Market\""
+        + "\"store\": \"\","
+        + "\"location\": \"Meat Market\","
         + "\"notes\": \"Don't eat the turkey Nic McPhee\""
         + "}";
     mockReq.setBodyContent(testNewProduct);
@@ -359,9 +426,32 @@ public class ProductControllerSpec {
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
-        + "\"store\": \"Willie's\""
-        + "\"location\": \"\""
+        + "\"store\": \"Willie's\","
+        + "\"location\": \"\","
         + "\"notes\": \"Don't eat the turkey Nic McPhee\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addInvalidLifespanProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"name\": \"Turkey - XXL\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"Willie's\","
+        + "\"location\": \"\","
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
+        + "\"lifespan\": -2,"
+        + "\"threshold\": 10"
         + "}";
     mockReq.setBodyContent(testNewProduct);
     mockReq.setMethod("POST");
