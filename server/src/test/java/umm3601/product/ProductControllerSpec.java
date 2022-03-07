@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 // import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 //import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 //import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -54,6 +56,7 @@ public class ProductControllerSpec {
   // `setupEach()`, and then exercised in the various tests below.
   private ProductController productController;
 
+  private ObjectId testId;
   // The client and database that will be used
   // for all the tests in this spec file.
   private static MongoClient mongoClient;
@@ -128,7 +131,16 @@ public class ProductControllerSpec {
             .append("location", "everywhere")
             .append("notes", "We love Conner's Potatoes!"));
 
+    testId = new ObjectId();
+    Document test = new Document()
+        .append("_id", testId)
+        .append("name", "Test")
+        .append("description", "testing")
+        .append("brand", "Test")
+        .append("notes", "We love tests");
+
     productDocuments.insertMany(testProducts);
+    productDocuments.insertOne(test);
 
     productController = new ProductController(db);
   }
@@ -194,12 +206,24 @@ public class ProductControllerSpec {
    *  a *single* `Product`.
    * @return the `Product` extracted from the given `Context`.
    */
-  // private Product returnedSingleProduct(Context ctx) {
-  //   String result = ctx.resultString();
-  //   Product product = javalinJackson.fromJsonString(result, Product.class);
-  //   return product;
-  // }
+  private Product returnedSingleProduct(Context ctx) {
+    String result = ctx.resultString();
+    Product product = javalinJackson.fromJsonString(result, Product.class);
+    return product;
+  }
 
+  @Test
+  public void canGetProductByExistingId() throws IOException {
+    String testID = testId.toHexString();
+    Context ctx = mockContext("api/products/{id}", Map.of("id", testID));
+
+    productController.getProduct(ctx);
+    Product resultProduct = returnedSingleProduct(ctx);
+
+    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
+    assertEquals(testId.toHexString(), resultProduct._id);
+    assertEquals("Test", resultProduct.name);
+  }
 
   @Test
   public void canGetAllProducts() throws IOException {

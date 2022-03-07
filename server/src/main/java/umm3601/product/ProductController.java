@@ -14,13 +14,14 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.bson.conversions.Bson;
-//import org.bson.types.ObjectId;
+import org.bson.types.ObjectId;
 import org.mongojack.JacksonMongoCollection;
 
-//import io.javalin.http.BadRequestResponse;
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 // import io.javalin.http.HttpCode;
-// import io.javalin.http.NotFoundResponse;
+import io.javalin.http.NotFoundResponse;
+
 
 public class ProductController {
 
@@ -35,6 +36,25 @@ public class ProductController {
         "products",
         Product.class,
         UuidRepresentation.STANDARD);
+  }
+
+  /*
+  * Get the single product specified by the `id` parameter
+  */
+  public void getProduct(Context ctx) {
+    String id = ctx.pathParam("id");
+    Product product;
+
+    try {
+      product = productCollection.find(eq("_id", new ObjectId(id))).first();
+    } catch (IllegalArgumentException e) {
+      throw new BadRequestResponse("The requested product id wasn't a legal Mongo Object ID");
+    }
+    if (product == null) {
+      throw new NotFoundResponse("The requested product was not found");
+    } else {
+      ctx.json(product);
+    }
   }
 
   public void getProducts(Context ctx) {
