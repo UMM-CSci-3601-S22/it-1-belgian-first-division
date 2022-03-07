@@ -2,29 +2,35 @@ package umm3601.product;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+// import static com.mongodb.client.model.Filters.regex;
 
+// import java.nio.charset.StandardCharsets;
+// import java.security.MessageDigest;
+// import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Map;
-//import java.util.Objects;
+// import java.util.Objects;
+import java.util.Map;
+// import java.util.regex.Pattern;
 
 import com.mongodb.client.MongoDatabase;
-//import com.mongodb.client.model.Sorts;
+// import com.mongodb.client.model.Sorts;
+// import com.mongodb.client.result.DeleteResult;
 
 import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.bson.conversions.Bson;
-//import org.bson.types.ObjectId;
+// import org.bson.types.ObjectId;
 import org.mongojack.JacksonMongoCollection;
 
-//import io.javalin.http.BadRequestResponse;
+// import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
-// import io.javalin.http.HttpCode;
 // import io.javalin.http.NotFoundResponse;
+import io.javalin.http.HttpCode;
 
 public class ProductController {
 
-  private static final String NAME_KEY = "product_name";
+  private static final String NAME_KEY = "name";
   //private static final String BRAND_KEY = "brand"; --One Day
 
   private final JacksonMongoCollection<Product> productCollection;
@@ -77,9 +83,10 @@ public class ProductController {
      *    - The location is assumed to not be blank ('usr.location.length > 0')
      */
     Product newProduct = ctx.bodyValidator(Product.class)
-      .check(usr -> usr.product_name != null && usr.product_name.length() > 0, "Product must have a non-empty product name")
+      .check(usr -> usr.name != null && usr.name.length() > 0, "Product must have a non-empty product name")
       .check(usr -> usr.store != null && usr.store.length() > 0, "Store must have a non-empty store name")
       .check(usr -> usr.location != null && usr.location.length() > 0, "Product must have a non-empty location name")
+      .check(usr -> usr.lifespan >= 0, "Product's lifespan can't be negative")
       .get();
 
     productCollection.insertOne(newProduct);
@@ -89,6 +96,6 @@ public class ProductController {
     // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     // for a description of the various response codes.
     ctx.status(HttpCode.CREATED);
-    ctx.json(Map.of("product name", newProduct.product_name));
+    ctx.json(Map.of("id", newProduct._id));
   }
 }

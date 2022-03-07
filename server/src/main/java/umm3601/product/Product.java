@@ -12,7 +12,7 @@ public class Product {
   public String _id;
 
   @SuppressWarnings({"MemberName"})
-  public String product_name; // required
+  public String name; // required
 
   public String description; // Can empty
   public String brand; // brand can be empty.
@@ -20,7 +20,7 @@ public class Product {
   public String store; // Assume it's not empty
   public String location; // Assume it's not empty
   public String notes; // can be empty
-  public int lifespan;
-  public int threshold;
+  public int lifespan; // assuming it isn't negative
+  public int threshold; // can be empty
 
 }
