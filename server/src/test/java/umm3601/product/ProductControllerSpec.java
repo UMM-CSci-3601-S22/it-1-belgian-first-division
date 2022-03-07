@@ -6,7 +6,7 @@ import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 // import static org.junit.jupiter.api.Assertions.assertNotEquals;
 // import static org.junit.jupiter.api.Assertions.assertNotNull;
-// import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 // import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -30,19 +30,18 @@ import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
-//import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.javalin.core.JavalinConfig;
-// import io.javalin.core.validation.ValidationException;
-// import io.javalin.http.BadRequestResponse;
+import io.javalin.core.validation.ValidationException;
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 import io.javalin.http.HttpCode;
-//import io.javalin.http.NotFoundResponse;
+import io.javalin.http.NotFoundResponse;
 import io.javalin.http.util.ContextUtil;
 import io.javalin.plugin.json.JavalinJackson;
 
@@ -213,7 +212,7 @@ public class ProductControllerSpec {
   }
 
   @Test
-  public void canGetProductByExistingId() throws IOException {
+  public void canGetProductWithExistingId() throws IOException {
     String testID = testId.toHexString();
     Context ctx = mockContext("api/products/{id}", Map.of("id", testID));
 
@@ -223,6 +222,24 @@ public class ProductControllerSpec {
     assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
     assertEquals(testId.toHexString(), resultProduct._id);
     assertEquals("Test", resultProduct.name);
+  }
+
+  @Test
+  public void getProductWithBadId() throws IOException {
+    Context ctx = mockContext("api/products/{id}", Map.of("id","bad"));
+
+    assertThrows(BadRequestResponse.class, () -> {
+      productController.getProduct(ctx);
+    });
+  }
+
+  @Test
+  public void getProductWithNonexistentId() throws IOException {
+    Context ctx = mockContext("api/products/{id}", Map.of("id", "abd"));
+
+    assertThrows(NotFoundResponse.class, () -> {
+      productController.getProduct(ctx);
+    });
   }
 
   @Test
