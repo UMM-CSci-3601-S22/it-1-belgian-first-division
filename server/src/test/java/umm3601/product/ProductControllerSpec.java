@@ -40,7 +40,7 @@ import io.javalin.core.validation.ValidationException;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 import io.javalin.http.HttpCode;
-//import io.javalin.http.NotFoundResponse;
+// import io.javalin.http.NotFoundResponse;
 import io.javalin.http.util.ContextUtil;
 import io.javalin.plugin.json.JavalinJackson;
 
@@ -102,31 +102,37 @@ public class ProductControllerSpec {
     List<Document> testProducts = new ArrayList<>();
     testProducts.add(
         new Document()
-            .append("product_name", "Apple")
+            .append("name", "Apple")
             .append("description", "these are the apples i like.")
             .append("brand", "UMM")
             .append("category", "fruit")
             .append("store", "Apple Store")
             .append("location", "here")
-            .append("notes", "These are good apples."));
+            .append("notes", "These are good apples.")
+            .append("lifespan", 6)
+            .append("threshold", 10));
     testProducts.add(
         new Document()
-            .append("product_name", "Grapes")
+            .append("name", "Grapes")
             .append("description", "these are the grapes i like.")
             .append("brand", "Generic")
             .append("category", "fruit")
             .append("store", "Grape Store")
             .append("location", "there")
-            .append("notes", "These are good grapes."));
+            .append("notes", "These are good grapes.")
+            .append("lifespan", 14)
+            .append("threshold", 10));
     testProducts.add(
         new Document()
-            .append("product_name", "Potatoes")
+            .append("name", "Potatoes")
             .append("description", "I like these potatoes.")
             .append("brand", "Conner's Potatoes")
             .append("category", "produce")
             .append("store", "Farmer's Market")
             .append("location", "everywhere")
-            .append("notes", "We love Conner's Potatoes!"));
+            .append("notes", "We love Conner's Potatoes!")
+            .append("lifespan", 45)
+            .append("threshold", 10));
 
     productDocuments.insertMany(testProducts);
 
@@ -223,7 +229,7 @@ public class ProductControllerSpec {
   @Test
   public void canGetProductWithNameApple() throws IOException {
 
-    mockReq.setQueryString("product_name=Apple");
+    mockReq.setQueryString("name=Apple");
     String path = "api/products";
     Context ctx = mockContext(path);
 
@@ -241,13 +247,15 @@ public class ProductControllerSpec {
   public void addProduct() throws IOException {
 
     String testNewProduct = "{"
-        + "\"product_name\": \"Turkey - XXL\","
+        + "\"name\": \"Turkey - XXL\","
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
-        + "\"store\": \"Willie's\""
-        + "\"location\": \"Meat Market\""
-        + "\"notes\": \"Don't eat the turkey Nic McPhee\""
+        + "\"store\": \"Willie's\","
+        + "\"location\": \"Meat Market\","
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
+        + "\"lifespan\": 10,"
+        + "\"threshold\": 10"
         + "}";
     mockReq.setBodyContent(testNewProduct);
     mockReq.setMethod("POST");
@@ -271,13 +279,15 @@ public class ProductControllerSpec {
     Document addedProduct = db.getCollection("products").find(eq("_id", new ObjectId(id))).first();
 
     assertNotNull(addedProduct);
-    assertEquals("Turkey - XXL", addedProduct.getString("product_name"));
+    assertEquals("Turkey - XXL", addedProduct.getString("name"));
     assertEquals("Homegrown Morris Turkey", addedProduct.getString("description"));
     assertEquals("The CSCI Dungeon", addedProduct.getString("brand"));
     assertEquals("meat", addedProduct.getString("category"));
     assertEquals("Willie's", addedProduct.getString("store"));
     assertEquals("Meat Market", addedProduct.getString("location"));
     assertEquals("Don't eat the turkey Nic McPhee", addedProduct.getString("notes"));
+    assertEquals(10, addedProduct.getInteger("lifespan"));
+    assertEquals(10, addedProduct.getInteger("threshold"));
   }
 
   @Test
@@ -324,7 +334,7 @@ public class ProductControllerSpec {
   @Test
   public void addInvalidStoreProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Turkey - XXL\","
+        + "\"name\": \"Turkey - XXL\","
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
@@ -345,7 +355,7 @@ public class ProductControllerSpec {
   @Test
   public void addInvalidLocationProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Turkey - XXL\","
+        + "\"name\": \"Turkey - XXL\","
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
