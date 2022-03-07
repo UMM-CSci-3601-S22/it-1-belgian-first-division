@@ -20,6 +20,8 @@ export class ProductService {
     // Filter by name
     if (filters.name) {
 
+      filters.name = filters.name.toLowerCase();
+
       filteredProducts = filteredProducts.filter(product => product.name.toLowerCase().indexOf(filters.name) !== -1);
     }
 
