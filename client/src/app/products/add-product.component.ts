@@ -16,10 +16,9 @@ export class AddProductComponent implements OnInit {
 
   product: Product;
 
-  addProductValidationMethod = {
+  addProductValidationMessages = {
     name: [
       {type: 'required', message: 'Must provide a product name.'},
-      {type: 'minlength', message: 'Name cannot be blank'},
       {type: 'maxlength', message: 'Name cannot be more than 50 characters long'},
       {type: 'existingName', message: 'There is already a product with the same name' +
     ' in the pantry'}
@@ -27,13 +26,11 @@ export class AddProductComponent implements OnInit {
 
     brand: [
       {type: 'required', message: 'Must provide a brand'},
-      {type: 'minlength', message: 'Brand cannot be blank'},
       {type: 'maxlength', message: 'Brand cannot be more than 50 characters long'}
     ],
 
     store: [
       {type: 'required', message: 'Must provide a store.'},
-      {type: 'minlength', message: 'Store cannot be blank'},
       {type: 'maxlength', message: 'Store cannot be more than 50 characters long'}
     ],
 

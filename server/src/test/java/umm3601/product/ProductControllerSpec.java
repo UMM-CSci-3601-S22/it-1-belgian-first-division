@@ -102,7 +102,7 @@ public class ProductControllerSpec {
     List<Document> testProducts = new ArrayList<>();
     testProducts.add(
         new Document()
-            .append("product_name", "Apple")
+            .append("name", "Apple")
             .append("description", "these are the apples i like.")
             .append("brand", "UMM")
             .append("category", "fruit")
@@ -111,7 +111,7 @@ public class ProductControllerSpec {
             .append("notes", "These are good apples."));
     testProducts.add(
         new Document()
-            .append("product_name", "Grapes")
+            .append("name", "Grapes")
             .append("description", "these are the grapes i like.")
             .append("brand", "Generic")
             .append("category", "fruit")
@@ -120,7 +120,7 @@ public class ProductControllerSpec {
             .append("notes", "These are good grapes."));
     testProducts.add(
         new Document()
-            .append("product_name", "Potatoes")
+            .append("name", "Potatoes")
             .append("description", "I like these potatoes.")
             .append("brand", "Conner's Potatoes")
             .append("category", "produce")
@@ -223,7 +223,7 @@ public class ProductControllerSpec {
   @Test
   public void canGetProductWithNameApple() throws IOException {
 
-    mockReq.setQueryString("product_name=Apple");
+    mockReq.setQueryString("name=Apple");
     String path = "api/products";
     Context ctx = mockContext(path);
 

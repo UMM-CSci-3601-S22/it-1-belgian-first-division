@@ -65,17 +65,17 @@ it('getProducts() calls api/products', () => {
   req.flush(testProducts);
 });
 
-it('getProducts() calls api/products with filter param \'product_name\'', () => {
+it('getProducts() calls api/products with filter param \'name\'', () => {
   productService.getProducts({name: 'Apple'}).subscribe(
     products => expect(products).toBe(testProducts)
   );
 
   const req = httpTestingController.expectOne(
-  (request) => request.url.startsWith(productService.productUrl) && request.params.has('product_name'));
+  (request) => request.url.startsWith(productService.productUrl) && request.params.has('name'));
 
   expect(req.request.method).toEqual('GET');
 
-  expect(req.request.params.get('product_name')).toEqual('Apple');
+  expect(req.request.params.get('name')).toEqual('Apple');
 
   req.flush(testProducts);
 });

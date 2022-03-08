@@ -65,7 +65,7 @@ describe('AddProductComponent', () => {
     it('should not allow empty names', () => {
       nameControl.setValue('');
       expect(nameControl.valid).toBeFalsy();
-      expect(nameControl.hasError('minlength')).toBeTruthy();
+      expect(nameControl.hasError('required')).toBeTruthy();
     });
 
     it('should be fine with Conner\'s Potatoes', () => {
@@ -79,7 +79,7 @@ describe('AddProductComponent', () => {
     });
 
     it('should fail on really long names', () => {
-      nameControl.setValue('x'.repeat(50));
+      nameControl.setValue('x'.repeat(51));
       expect(nameControl.valid).toBeFalsy();
 
       expect(nameControl.hasError('maxlength')).toBeTruthy();
@@ -114,7 +114,7 @@ describe('AddProductComponent', () => {
     it('should not allow empty brands', () => {
       brandControl.setValue('');
       expect(brandControl.valid).toBeFalsy();
-      expect(brandControl.hasError('minlength')).toBeTruthy();
+      expect(brandControl.hasError('required')).toBeTruthy();
     });
 
     it('should be fine with Conner\'s Potatoes', () => {
@@ -128,7 +128,7 @@ describe('AddProductComponent', () => {
     });
 
     it('should fail on really long brand', () => {
-      brandControl.setValue('x'.repeat(50));
+      brandControl.setValue('x'.repeat(51));
       expect(brandControl.valid).toBeFalsy();
 
       expect(brandControl.hasError('maxlength')).toBeTruthy();
@@ -150,7 +150,7 @@ describe('AddProductComponent', () => {
     it('should not allow empty store', () => {
       storeControl.setValue('');
       expect(storeControl.valid).toBeFalsy();
-      expect(storeControl.hasError('minlength')).toBeTruthy();
+      expect(storeControl.hasError('required')).toBeTruthy();
     });
 
     it('should be fine with Conner\'s Farmer\'s Market', () => {
@@ -164,7 +164,7 @@ describe('AddProductComponent', () => {
     });
 
     it('should fail on really long store', () => {
-      storeControl.setValue('x'.repeat(50));
+      storeControl.setValue('x'.repeat(51));
       expect(storeControl.valid).toBeFalsy();
 
       expect(storeControl.hasError('maxlength')).toBeTruthy();
@@ -176,4 +176,41 @@ describe('AddProductComponent', () => {
     });
   });
 
+  describe('The lifespan and threshold fields', () => {
+    let lifespanControl: AbstractControl;
+    let thresholdControl: AbstractControl;
+
+    beforeEach(() => {
+      lifespanControl = addProductComponent.addProductForm.controls.lifespan;
+      thresholdControl = addProductComponent.addProductForm.controls.threshold;
+    });
+
+    it('should not allow negative lifespan', () => {
+      lifespanControl.setValue(-1);
+      expect(lifespanControl.valid).toBeFalsy();
+
+      expect(lifespanControl.hasError('min')).toBeTruthy();
+    });
+
+    it('should not allow 0 lifespan', () => {
+      lifespanControl.setValue(0);
+      expect(lifespanControl.valid).toBeFalsy();
+
+      expect(lifespanControl.hasError('min')).toBeTruthy();
+    });
+
+    it('should not allow negative threshold', () => {
+      thresholdControl.setValue(-1);
+      expect(thresholdControl.valid).toBeFalsy();
+
+      expect(thresholdControl.hasError('min')).toBeTruthy();
+    });
+
+    it('should allow 0 threshold', () => {
+      thresholdControl.setValue(0);
+      expect(thresholdControl.valid).toBeTruthy();
+
+      expect(thresholdControl.hasError('min')).toBeFalsy();
+    });
+  });
 });

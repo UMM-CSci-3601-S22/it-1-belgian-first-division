@@ -32,7 +32,7 @@ export class ProductService {
 
     if (filters) {
       if (filters.name) {
-        httpParams = httpParams.set('product_name', filters.name);
+        httpParams = httpParams.set('name', filters.name);
       }
     }
 
