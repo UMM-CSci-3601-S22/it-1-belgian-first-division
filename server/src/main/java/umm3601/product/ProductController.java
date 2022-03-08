@@ -2,29 +2,35 @@ package umm3601.product;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+// import static com.mongodb.client.model.Filters.regex;
 
+// import java.nio.charset.StandardCharsets;
+// import java.security.MessageDigest;
+// import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Map;
-//import java.util.Objects;
+// import java.util.Objects;
+import java.util.Map;
+// import java.util.regex.Pattern;
 
 import com.mongodb.client.MongoDatabase;
-//import com.mongodb.client.model.Sorts;
+// import com.mongodb.client.model.Sorts;
+// import com.mongodb.client.result.DeleteResult;
 
 import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.bson.conversions.Bson;
-//import org.bson.types.ObjectId;
+// import org.bson.types.ObjectId;
 import org.mongojack.JacksonMongoCollection;
 
-//import io.javalin.http.BadRequestResponse;
+// import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
-// import io.javalin.http.HttpCode;
 // import io.javalin.http.NotFoundResponse;
+import io.javalin.http.HttpCode;
 
 public class ProductController {
 
-  private static final String NAME_KEY = "product_name";
+  private static final String NAME_KEY = "name";
   //private static final String BRAND_KEY = "brand"; --One Day
 
   private final JacksonMongoCollection<Product> productCollection;
@@ -64,5 +70,32 @@ public class ProductController {
     Bson combinedFilter = filters.isEmpty() ? new Document() : and(filters);
 
     return combinedFilter;
+  }
+
+  public void addNewProduct(Context ctx) {
+    /*
+     * The follow chain of statements uses the Javalin validator system
+     * to verify that instance of `Product` provided in this context is
+     * a "legal" product. It checks the following things (in order):
+     *    - The product has a value for the name (`pdr.name != null`)
+     *    - The product name is not blank (`pdr.name.length > 0`)
+     *    - The store is assumed to not be blank ('pdr.store.length > 0')
+     *    - The location is assumed to not be blank ('pdr.location.length > 0')
+     */
+    Product newProduct = ctx.bodyValidator(Product.class)
+      .check(pdr -> pdr.name != null && pdr.name.length() > 0, "Product must have a non-empty product name")
+      .check(pdr -> pdr.store != null && pdr.store.length() > 0, "Store must have a non-empty store name")
+      .check(pdr -> pdr.location != null && pdr.location.length() > 0, "Product must have a non-empty location name")
+      .check(pdr -> pdr.lifespan >= 0, "Product's lifespan can't be negative")
+      .get();
+
+    productCollection.insertOne(newProduct);
+
+    // 201 is the HTTP code for when we successfully
+    // create a new resource (a user in this case).
+    // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+    // for a description of the various response codes.
+    ctx.status(HttpCode.CREATED);
+    ctx.json(Map.of("id", newProduct._id));
   }
 }
