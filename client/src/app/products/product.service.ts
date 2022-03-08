@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Product } from './product';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,9 @@ export class ProductService {
     return this.httpClient.get<Product[]>(this.productUrl, {
       params: httpParams,
     });
+  }
+
+  addProduct(newProduct: Product): Observable<string> {
+    return this.httpClient.post<{id: string}>(this.productUrl, newProduct).pipe(map(res => res.id));
   }
 }
