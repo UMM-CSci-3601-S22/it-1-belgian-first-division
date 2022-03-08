@@ -177,7 +177,8 @@ public class UserControllerSpec {
    * for the fourth argument. There are two attributes we need to provide:
    *
    *   - One is a `JsonMapper` that is used to translate between POJOs and JSON
-   *     objects. This is needed by a   .check(usr -> usr.name != null && usr.name.length() > 0, "Product must have a non-empty product name")lmost every test.
+   *     objects. This is needed by a   .check(usr -> usr.name != null && usr.name.length() > 0,
+   *      "Product must have a non-empty product name")almost every test.
    *   - The other is `maxRequestSize`, which is needed for all the ADD requests,
    *     since `ContextUtil` checks to make sure that the request isn't "too big".
    *     Those tests fails if you don't provide a value for `maxRequestSize` for
