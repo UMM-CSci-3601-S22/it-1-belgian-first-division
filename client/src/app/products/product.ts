@@ -8,5 +8,6 @@ export interface Product {
   store?: string;
   location?: string;
   notes?: string;
-  tags?: string[];
+  lifespan?: number;
+  threshold?: number;
 }
