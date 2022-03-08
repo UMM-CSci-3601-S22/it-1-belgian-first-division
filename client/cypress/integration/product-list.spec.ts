@@ -2,7 +2,7 @@ import {ProductListPage } from '../support/product-list.po';
 
 const page = new ProductListPage();
 
-describe('Product List', () =>{
+describe('Product List', () => {
 
   before(() => {
     cy.task('seed:database');
@@ -33,7 +33,7 @@ describe('Product List', () =>{
   });
 
   //This has not been implemented yet, still have to add {id} paths in Javalin
-  /*
+
   it('Should click view profile on a user and go to the right URL', () => {
     page.getProductListItems().first().then((list) => {
       const firstProductName = list.find('.product-list-name').text();
@@ -49,11 +49,10 @@ describe('Product List', () =>{
       cy.get('.product-list-name').first().should('have.text', firstProductName);
       cy.get('.product-list-company').first().should('have.text', firstProductBrand);
     });
+  });
 
-    */
+  //This should get added when our add-product-component gets added
 
-    //This should get added when our add-product-component gets added
-  /*
   it('Should click add product and go to the right URL', () => {
     // Click on the button for adding a new user
     page.addProductButton().click();
@@ -64,5 +63,5 @@ describe('Product List', () =>{
     // On the page we were sent to, We should see the right title
     cy.get('.add-product-title').should('have.text', 'New Product');
   });
-  */
+
 });
