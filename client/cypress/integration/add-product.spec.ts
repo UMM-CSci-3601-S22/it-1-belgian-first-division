@@ -24,7 +24,7 @@ describe('Add product', () => {
     page.getFormField('brand').type('potatoBrand');
     page.addProductButton().should('be.disabled');
     page.getFormField('category').type('fruit');
-    page.getFormField('')
+    page.addProductButton().should('be.disabled');
     // all the required fields have valid input, then it should be enabled
     page.addProductButton().should('be.enabled');
   });
