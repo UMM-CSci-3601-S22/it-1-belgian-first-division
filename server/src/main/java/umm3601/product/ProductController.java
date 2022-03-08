@@ -77,16 +77,16 @@ public class ProductController {
      * The follow chain of statements uses the Javalin validator system
      * to verify that instance of `Product` provided in this context is
      * a "legal" product. It checks the following things (in order):
-     *    - The product has a value for the name (`usr.name != null`)
-     *    - The product name is not blank (`usr.name.length > 0`)
-     *    - The store is assumed to not be blank ('usr.store.length > 0')
-     *    - The location is assumed to not be blank ('usr.location.length > 0')
+     *    - The product has a value for the name (`pdr.name != null`)
+     *    - The product name is not blank (`pdr.name.length > 0`)
+     *    - The store is assumed to not be blank ('pdr.store.length > 0')
+     *    - The location is assumed to not be blank ('pdr.location.length > 0')
      */
     Product newProduct = ctx.bodyValidator(Product.class)
-      .check(usr -> usr.name != null && usr.name.length() > 0, "Product must have a non-empty product name")
-      .check(usr -> usr.store != null && usr.store.length() > 0, "Store must have a non-empty store name")
-      .check(usr -> usr.location != null && usr.location.length() > 0, "Product must have a non-empty location name")
-      .check(usr -> usr.lifespan >= 0, "Product's lifespan can't be negative")
+      .check(pdr -> pdr.name != null && pdr.name.length() > 0, "Product must have a non-empty product name")
+      .check(pdr -> pdr.store != null && pdr.store.length() > 0, "Store must have a non-empty store name")
+      .check(pdr -> pdr.location != null && pdr.location.length() > 0, "Product must have a non-empty location name")
+      .check(pdr -> pdr.lifespan >= 0, "Product's lifespan can't be negative")
       .get();
 
     productCollection.insertOne(newProduct);

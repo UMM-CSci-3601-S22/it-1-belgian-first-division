@@ -296,8 +296,8 @@ public class ProductControllerSpec {
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
-        + "\"store\": \"Willie's\""
-        + "\"location\": \"Meat Market\""
+        + "\"store\": \"Willie's\","
+        + "\"location\": \"Meat Market\","
         + "\"notes\": \"Don't eat the turkey Nic McPhee\","
         + "\"lifespan\": 10,"
         + "\"threshold\": 10"
@@ -319,7 +319,7 @@ public class ProductControllerSpec {
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
-        + "\"location\": \"Meat Market\""
+        + "\"location\": \"Meat Market\","
         + "\"notes\": \"Don't eat the turkey Nic McPhee\","
         + "\"lifespan\": 10,"
         + "\"threshold\": 10"
@@ -341,7 +341,7 @@ public class ProductControllerSpec {
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
-        + "\"store\": \"Willie's\""
+        + "\"store\": \"Willie's\","
         + "\"notes\": \"Don't eat the turkey Nic McPhee\","
         + "\"lifespan\": 10,"
         + "\"threshold\": 10"
@@ -357,30 +357,9 @@ public class ProductControllerSpec {
   }
 
   @Test
-  public void addNullLifespanProduct() throws IOException {
-    String testNewProduct = "{"
-        + "\"name\": \"Turkey - XXL\","
-        + "\"description\": \"Homegrown Morris Turkey\","
-        + "\"brand\": \"The CSCI Dungeon\","
-        + "\"category\": \"meat\","
-        + "\"store\": \"Willie's\","
-        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
-        + "\"threshold\": 10"
-        + "}";
-    mockReq.setBodyContent(testNewProduct);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/products");
-
-    assertThrows(ValidationException.class, () -> {
-      productController.addNewProduct(ctx);
-    });
-  }
-
-  @Test
   public void addInvalidNameProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product name\": \"\","
+        + "\"name\": \"\","
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
