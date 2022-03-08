@@ -14,12 +14,13 @@ public class Product {
   @SuppressWarnings({"MemberName"})
   public String name;
 
-  public String description;
+  public String description; // Can empty
   public String brand; // brand can be empty.
-  public String category;
-  public String store;
-  public String location;
+  public String category; // Can be empty
+  public String store; // Assume it's not empty
+  public String location; // Assume it's not empty
   public String notes; // can be empty
-  public int lifespan;
-  public int threshold;
+  public int lifespan; // assuming it isn't negative
+  public int threshold; // can be empty
+
 }
