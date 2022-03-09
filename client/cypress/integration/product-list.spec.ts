@@ -37,7 +37,7 @@ describe('Product List', () => {
   it('Should click view profile on a product and go to the right URL', () => {
     page.getProductListItems().first().then((list) => {
       const firstProductName = list.find('.product-list-name').text();
-      const firstProductBrand = list.find('.product-list-company').text();
+      const firstProductBrand = list.find('.product-list-brand').text();
 
       // When the view profile button on the first product card is clicked, the URL should have a valid mongo ID
       page.clickViewProductOnFirst();
@@ -45,9 +45,9 @@ describe('Product List', () => {
       // The URL should be '/products/' followed by a mongo ID
       cy.url().should('match', /\/products\/[0-9a-fA-F]{24}$/);
 
-      // On this profile page we were sent to, the name and company should be correct
+      // On this profile page we were sent to, the name and brand should be correct
       cy.get('.product-list-name').first().should('have.text', firstProductName);
-      cy.get('.product-list-company').first().should('have.text', firstProductBrand);
+      cy.get('.product-list-brand').first().should('have.text', firstProductBrand);
     });
   });
 
