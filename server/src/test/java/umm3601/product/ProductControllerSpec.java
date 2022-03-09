@@ -252,7 +252,7 @@ public class ProductControllerSpec {
 
   @Test
   public void getProductWithBadId() throws IOException {
-    Context ctx = mockContext("api/products/{id}", Map.of("id","bad"));
+    Context ctx = mockContext("api/products/{id}", Map.of("id", "bad"));
 
     assertThrows(BadRequestResponse.class, () -> {
       productController.getProduct(ctx);
