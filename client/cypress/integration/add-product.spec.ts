@@ -14,7 +14,7 @@ describe('Add product', () => {
 
   it('Should enable and disable the add product button', () => {
     // ADD PRODUCT button should be disabled until all the necessary fields
-    // are filled. Once the last (`#emailField`) is filled, then the button should
+    // are filled. Once the last (`#lifespanField`) is filled, then the button should
     // become enabled.
     page.addProductButton().should('be.disabled');
     page.getFormField('name').type('test');
@@ -30,7 +30,7 @@ describe('Add product', () => {
     // all the required fields have valid input, then it should be enabled
   });
 
-  it('Should show error messages for invalid inputs', () => {
+  it('Should show error messbrands for invalid inputs', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=nameError]').should('not.exist');
     // Just clicking the name field without entering anything should cause an error message
@@ -46,7 +46,7 @@ describe('Add product', () => {
     cy.get('[data-test=nameError]').should('not.exist');
   });
 
-  it('Should show error messages for invalid inputs', () => {
+  it('Should show error messbrands for invalid inputs', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=storeError]').should('not.exist');
     // Just clicking the description field without entering anything should cause an error message
@@ -62,7 +62,7 @@ describe('Add product', () => {
     cy.get('[data-test=storeError]').should('not.exist');
   });
 
-  it('Should show error messages for invalid inputs', () => {
+  it('Should show error messbrands for invalid inputs', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=brandError]').should('not.exist');
     // Just clicking the brand field without entering anything should cause an error message
@@ -78,4 +78,66 @@ describe('Add product', () => {
     cy.get('[data-test=brandError]').should('not.exist');
   });
 
+
+  describe('Adding a new product', () => {
+
+    beforeEach(() => {
+      cy.task('seed:database');
+    });
+
+    it('Should go to the right page, and have the right info', () => {
+      const product: Product = {
+        _id: null,
+        name: 'Test Product',
+        brand: 'umm',
+        store: 'location',
+        lifespan: 20,
+        threshold: 20
+      };
+
+      page.addProduct(product);
+
+      // New URL should end in the 24 hex character Mongo ID of the newly added product
+      cy.url()
+        .should('match', /\/products\/[0-9a-fA-F]{24}$/)
+        .should('not.match', /\/products\/new$/);
+
+      // The new product should have all the same attributes as we entered
+      cy.get('.product-card-name').should('have.text', product.name);
+      cy.get('.product-card-brand').should('have.text', product.brand);
+      cy.get('.product-card-store').should('have.text', product.store);
+      cy.get('.product-card-lifespan').should('have.text', product.lifespan);
+      cy.get('.product-card-threshold').should('have.text', product.threshold);
+
+      // We should see the confirmation message at the bottom of the screen
+      cy.get('.mat-simple-snackbar').should('contain', `Added Product ${product.name}`);
+    });
+
+    it('Should fail with no store', () => {
+      const product: Product = {
+        _id: null,
+        name: 'Test Product',
+        brand: 'umm',
+        store: null, // The store being set to null means nothing will be typed for it
+        lifespan: 20,
+        threshold: 20
+      };
+
+      page.addProduct(product);
+
+      // We should get an error message
+      cy.get('.mat-simple-snackbar').should('contain', `Failed to add the product`);
+
+      // We should have stayed on the new product page
+      cy.url()
+        .should('not.match', /\/products\/[0-9a-fA-F]{24}$/)
+        .should('match', /\/products\/new$/);
+
+      // The things we entered in the form should still be there
+      page.getFormField('name').should('have.value', product.name);
+      page.getFormField('brand').should('have.value', product.brand);
+      page.getFormField('lifespan').should('have.value', product.lifespan);
+      page.getFormField('threshold').should('have.value', product.threshold);
+    });
+  });
 });
