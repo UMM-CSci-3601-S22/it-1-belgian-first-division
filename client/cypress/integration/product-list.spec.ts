@@ -40,7 +40,7 @@ describe('Product List', () => {
       const firstProductBrand = list.find('.product-list-brand').text();
 
       // When the view profile button on the first product card is clicked, the URL should have a valid mongo ID
-      page.clickViewProductOnFirst();
+      page.clickFirstProduct();
 
       // The URL should be '/products/' followed by a mongo ID
       cy.url().should('match', /\/products\/[0-9a-fA-F]{24}$/);
