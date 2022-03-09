@@ -10,7 +10,7 @@ getProductListItems() {
 }
 
 clickViewProductOnFirst() {
-  return cy.find('.product-list-item').first().click();
+  return cy.find('.product-nav-list').get('.product-list-item').first().click();
 }
 
 // This isn't going to be used quite yet, since there is no add-product button at the moment
