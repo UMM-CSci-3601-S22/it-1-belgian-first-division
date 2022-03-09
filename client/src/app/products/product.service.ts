@@ -28,6 +28,10 @@ export class ProductService {
     return filteredProducts;
   }
 
+  getProductById(id: string): Observable<Product> {
+    return this.httpClient.get<Product>(this.productUrl + '/' + id);
+  }
+
   getProducts(filters?: { name?: string }): Observable<Product[]> {
     let httpParams: HttpParams = new HttpParams();
 
