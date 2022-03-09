@@ -28,7 +28,7 @@ describe('Product List', () => {
 
     // Secondary check to see if listed products have specified name
     page.getProductListItems().find('.product-list-name').each(el =>
-      expect(el.text()).to.equal('Sobe - Orange Carrot')
+      expect(el.text()).to.equal(' Sobe - Orange Carrot ')
     );
   });
 
