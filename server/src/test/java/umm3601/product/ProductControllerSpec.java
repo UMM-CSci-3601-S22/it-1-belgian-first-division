@@ -200,11 +200,11 @@ public class ProductControllerSpec {
    *  a *single* `Product`.
    * @return the `Product` extracted from the given `Context`.
    */
-  // private Product returnedSingleProduct(Context ctx) {
-  //   String result = ctx.resultString();
-  //   Product product = javalinJackson.fromJsonString(result, Product.class);
-  //   return product;
-  // }
+  private Product returnedSingleProduct(Context ctx) {
+    String result = ctx.resultString();
+    Product product = javalinJackson.fromJsonString(result, Product.class);
+    return product;
+  }
 
 
   @Test
@@ -224,6 +224,37 @@ public class ProductControllerSpec {
       db.getCollection("products").countDocuments(),
       returnedProducts.length
     );
+  }
+
+  @Test
+  public void canGetProductWithExistingId() throws IOException {
+    String testID = testId.toHexString();
+    Context ctx = mockContext("api/products/{id}", Map.of("id", testID));
+
+    productController.getProduct(ctx);
+    Product resultProduct = returnedSingleProduct(ctx);
+
+    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
+    assertEquals(testId.toHexString(), resultProduct._id);
+    assertEquals("Test", resultProduct.name);
+  }
+
+  @Test
+  public void getProductWithBadId() throws IOException {
+    Context ctx = mockContext("api/products/{id}", Map.of("id","bad"));
+
+    assertThrows(BadRequestResponse.class, () -> {
+      productController.getProduct(ctx);
+    });
+  }
+
+  @Test
+  public void getProductWithNonexistentId() throws IOException {
+    Context ctx = mockContext("api/products/{id}", Map.of("id", "abd"));
+
+    assertThrows(NotFoundResponse.class, () -> {
+      productController.getProduct(ctx);
+    });
   }
 
   @Test
