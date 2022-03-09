@@ -71,21 +71,23 @@ export class AddProductComponent implements OnInit {
       brand: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(0),
-        Validators.maxLength(50),
+        Validators.maxLength(50)
       ])),
 
       store: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(0),
-        Validators.maxLength(50),
+        Validators.maxLength(50)
       ])),
 
       lifespan: new FormControl('', Validators.compose([
         Validators.min(1),
+        Validators.pattern('^[0-9]+$')
       ])),
 
       threshold: new FormControl('', Validators.compose([
         Validators.min(0),
+        Validators.pattern('^[0-9]+$')
       ])),
 
       description: new FormControl(),

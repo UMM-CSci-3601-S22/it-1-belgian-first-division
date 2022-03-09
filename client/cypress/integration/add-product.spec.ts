@@ -29,4 +29,52 @@ describe('Add product', () => {
     page.addProductButton().should('be.enabled');
   });
 
+  it('Should show error messages for invalid inputs', () => {
+    // Before doing anything there shouldn't be an error
+    cy.get('[data-test=nameError]').should('not.exist');
+    // Just clicking the name field without entering anything should cause an error message
+    page.getFormField('name').click().blur();
+    cy.get('[data-test=nameError]').should('exist').and('be.visible');
+    // Some more tests for various invalid name inputs
+    page.getFormField('name').type('J').blur();
+    cy.get('[data-test=nameError]').should('exist').and('be.visible');
+    page.getFormField('name').clear().type('This is a very long name that goes beyond the 50 character limit').blur();
+    cy.get('[data-test=nameError]').should('exist').and('be.visible');
+    // Entering a valid name should remove the error.
+    page.getFormField('name').clear().type('John Smith').blur();
+    cy.get('[data-test=nameError]').should('not.exist');
+  });
+
+  it('Should show error messages for invalid inputs', () => {
+    // Before doing anything there shouldn't be an error
+    cy.get('[data-test=storeError]').should('not.exist');
+    // Just clicking the description field without entering anything should cause an error message
+    page.getFormField('store').click().blur();
+    cy.get('[data-test=storeError]').should('exist').and('be.visible');
+    // Some more tests for various invalid description inputs
+    page.getFormField('store').type('J').blur();
+    cy.get('[data-test=storeError]').should('exist').and('be.visible');
+    page.getFormField('store').clear().type('This is a very long store that goes beyond the 50 character limit').blur();
+    cy.get('[data-test=storeError]').should('exist').and('be.visible');
+    // Entering a valid store should remove the error.
+    page.getFormField('store').clear().type('John Smith').blur();
+    cy.get('[data-test=storeError]').should('not.exist');
+  });
+
+  it('Should show error messages for invalid inputs', () => {
+    // Before doing anything there shouldn't be an error
+    cy.get('[data-test=brandError]').should('not.exist');
+    // Just clicking the brand field without entering anything should cause an error message
+    page.getFormField('brand').click().blur();
+    cy.get('[data-test=brandError]').should('exist').and('be.visible');
+    // Some more tests for various invalid brand inputs
+    page.getFormField('brand').type('J').blur();
+    cy.get('[data-test=brandError]').should('exist').and('be.visible');
+    page.getFormField('brand').clear().type('This is a very long brand that goes beyond the 50 character limit').blur();
+    cy.get('[data-test=brandError]').should('exist').and('be.visible');
+    // Entering a valid brand should remove the error.
+    page.getFormField('brand').clear().type('John Smith').blur();
+    cy.get('[data-test=brandError]').should('not.exist');
+  });
+
 });

@@ -23,17 +23,13 @@ export class AddProductPage {
 
   addProduct(newProduct: Product) {
     this.getFormField('name').type(newProduct.name);
+    this.getFormField('brand').type(newProduct.brand);
+    this.getFormField('store').type(newProduct.store);
     if (newProduct.description) {
       this.getFormField('description').type(newProduct.description);
     }
-    if (newProduct.brand) {
-      this.getFormField('brand').type(newProduct.brand);
-    }
     if (newProduct.category) {
       this.getFormField('category').type(newProduct.category);
-    }
-    if (newProduct.store) {
-      this.getFormField('store').type(newProduct.store);
     }
     if (newProduct.location) {
       this.getFormField('location').type(newProduct.location);
