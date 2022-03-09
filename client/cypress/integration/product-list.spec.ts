@@ -46,8 +46,8 @@ describe('Product List', () => {
       cy.url().should('match', /\/products\/[0-9a-fA-F]{24}$/);
 
       // On this profile page we were sent to, the name and brand should be correct
-      cy.get('.product-list-name').first().should('have.text', firstProductName);
-      cy.get('.product-list-brand').first().should('have.text', firstProductBrand);
+      cy.find('.product-list-name').first().should('have.text', firstProductName);
+      cy.find('.product-list-brand').first().should('have.text', firstProductBrand);
     });
   });
 
