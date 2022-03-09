@@ -19,14 +19,15 @@ describe('Add product', () => {
     page.addProductButton().should('be.disabled');
     page.getFormField('name').type('test');
     page.addProductButton().should('be.disabled');
-    page.getFormField('description').type('Some fun description of a product');
+    page.getFormField('store').type('A store');
     page.addProductButton().should('be.disabled');
     page.getFormField('brand').type('potatoBrand');
-    page.addProductButton().should('be.disabled');
-    page.getFormField('category').type('fruit');
-    page.addProductButton().should('be.disabled');
-    // all the required fields have valid input, then it should be enabled
     page.addProductButton().should('be.enabled');
+    // page.getFormField('lifespan').type('number');
+    // page.addProductButton().should('be.disabled');
+    // page.getFormField('threshold').type('number');
+    // page.addProductButton().should('be.disabled');
+    // all the required fields have valid input, then it should be enabled
   });
 
   it('Should show error messages for invalid inputs', () => {

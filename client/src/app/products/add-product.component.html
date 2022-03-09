@@ -14,7 +14,8 @@
           <mat-error *ngFor="let validation of addProductValidationMessages.name">
             <mat-error class="error-message" data-test="nameError"
                 *ngIf="addProductForm.get('name').hasError(validation.type) && (addProductForm.get('name').dirty || addProductForm.get('name').touched)">
-            </mat-error>
+                {{validation.message}}
+              </mat-error>
           </mat-error>
         </mat-form-field>
 
@@ -24,7 +25,8 @@
           <mat-error *ngFor="let validation of addProductValidationMessages.brand">
             <mat-error class="error-message" data-test="brandError"
                 *ngIf="addProductForm.get('brand').hasError(validation.type) && (addProductForm.get('brand').dirty || addProductForm.get('brand').touched)">
-            </mat-error>
+                {{validation.message}}
+              </mat-error>
           </mat-error>
         </mat-form-field>
 
@@ -34,7 +36,8 @@
           <mat-error *ngFor="let validation of addProductValidationMessages.store">
             <mat-error class="error-message" data-test="storeError"
                 *ngIf="addProductForm.get('store').hasError(validation.type) && (addProductForm.get('store').dirty || addProductForm.get('store').touched)">
-            </mat-error>
+                {{validation.message}}
+              </mat-error>
           </mat-error>
         </mat-form-field>
 
@@ -44,7 +47,8 @@
           <mat-error *ngFor="let validation of addProductValidationMessages.lifespan">
             <mat-error class="error-message" data-test="lifespanError"
                 *ngIf="addProductForm.get('lifespan').hasError(validation.type) && (addProductForm.get('lifespan').dirty || addProductForm.get('lifespan').touched)">
-            </mat-error>
+                {{validation.message}}
+              </mat-error>
           </mat-error>
         </mat-form-field>
 
@@ -54,7 +58,8 @@
           <mat-error *ngFor="let validation of addProductValidationMessages.threshold">
             <mat-error class="error-message" data-test="thresholdError"
                 *ngIf="addProductForm.get('threshold').hasError(validation.type) && (addProductForm.get('threshold').dirty || addProductForm.get('threshold').touched)">
-            </mat-error>
+                {{validation.message}}
+              </mat-error>
           </mat-error>
         </mat-form-field>
 
