@@ -36,11 +36,11 @@ import org.junit.jupiter.api.Test;
 
 import io.javalin.core.JavalinConfig;
 import io.javalin.core.validation.ValidationException;
-// import io.javalin.http.BadRequestResponse;
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 import io.javalin.http.HttpCode;
-// import io.javalin.http.NotFoundResponse;
+import io.javalin.http.NotFoundResponse;
 import io.javalin.http.util.ContextUtil;
 import io.javalin.plugin.json.JavalinJackson;
 
@@ -53,6 +53,8 @@ public class ProductControllerSpec {
   // An instance of the controller we're testing that is prepared in
   // `setupEach()`, and then exercised in the various tests below.
   private ProductController productController;
+
+  private ObjectId testId;
 
   // The client and database that will be used
   // for all the tests in this spec file.
@@ -133,8 +135,17 @@ public class ProductControllerSpec {
             .append("notes", "We love Conner's Potatoes!")
             .append("lifespan", 45)
             .append("threshold", 10));
+    testId = new ObjectId();
+    Document test = new Document()
+        .append("_id", testId)
+        .append("name", "Test")
+        .append("description", "testing")
+        .append("store", "testing")
+        .append("brand", "Test")
+        .append("notes", "We love tests");
 
     productDocuments.insertMany(testProducts);
+    productDocuments.insertOne(test);
 
     productController = new ProductController(db);
   }
@@ -250,7 +261,7 @@ public class ProductControllerSpec {
 
   @Test
   public void getProductWithNonexistentId() throws IOException {
-    Context ctx = mockContext("api/products/{id}", Map.of("id", "abd"));
+    Context ctx = mockContext("api/products/{id}", Map.of("id", "58af3a600343927e48e87335"));
 
     assertThrows(NotFoundResponse.class, () -> {
       productController.getProduct(ctx);
