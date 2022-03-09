@@ -18,28 +18,30 @@ export class AddProductComponent implements OnInit {
 
   addProductValidationMessages = {
     name: [
-      {type: 'required', message: 'Must provide a product name.'},
-      {type: 'maxlength', message: 'Name cannot be more than 50 characters long'},
-      {type: 'existingName', message: 'There is already a product with the same name' +
-    ' in the pantry'}
+      { type: 'required', message: 'Must provide a product name.' },
+      { type: 'maxlength', message: 'Name cannot be more than 50 characters long' },
+      {
+        type: 'existingName', message: 'There is already a product with the same name' +
+          ' in the pantry'
+      }
     ],
 
     brand: [
-      {type: 'required', message: 'Must provide a brand'},
-      {type: 'maxlength', message: 'Brand cannot be more than 50 characters long'}
+      { type: 'required', message: 'Must provide a brand' },
+      { type: 'maxlength', message: 'Brand cannot be more than 50 characters long' }
     ],
 
     store: [
-      {type: 'required', message: 'Must provide a store.'},
-      {type: 'maxlength', message: 'Store cannot be more than 50 characters long'}
+      { type: 'required', message: 'Must provide a store.' },
+      { type: 'maxlength', message: 'Store cannot be more than 50 characters long' }
     ],
 
     lifespan: [
-      {type: 'min', message: 'Lifespan must be greater than 0'}
+      { type: 'min', message: 'Lifespan must be greater than 0' }
     ],
 
     threshold: [
-      {type: 'min', message: 'Threshold cannot be negative'}
+      { type: 'min', message: 'Threshold cannot be negative' }
     ]
   };
 
@@ -60,7 +62,7 @@ export class AddProductComponent implements OnInit {
         Validators.maxLength(50),
         (fc) => {
           if (fc.value.toLowerCase() === 'abc123' || fc.value.toLowerCase() === '123abc') {
-            return ({existingName: true});
+            return ({ existingName: true });
           } else {
             return null;
           }

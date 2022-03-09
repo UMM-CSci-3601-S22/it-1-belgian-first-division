@@ -113,31 +113,5 @@ describe('Add product', () => {
       cy.get('.mat-simple-snackbar').should('contain', `Added Product ${product.name}`);
     });
 
-    it('Should fail with no store', () => {
-      const product: Product = {
-        _id: null,
-        name: 'Test Product',
-        brand: 'umm',
-        store: null, // The store being set to null means nothing will be typed for it
-        lifespan: 20,
-        threshold: 20
-      };
-
-      page.addProduct(product);
-
-      // We should get an error message
-      cy.get('.mat-simple-snackbar').should('contain', `Failed to add the product`);
-
-      // We should have stayed on the new product page
-      cy.url()
-        .should('not.match', /\/products\/[0-9a-fA-F]{24}$/)
-        .should('match', /\/products\/new$/);
-
-      // The things we entered in the form should still be there
-      page.getFormField('name').should('have.value', product.name);
-      page.getFormField('brand').should('have.value', product.brand);
-      page.getFormField('lifespan').should('have.value', product.lifespan);
-      page.getFormField('threshold').should('have.value', product.threshold);
-    });
   });
 });

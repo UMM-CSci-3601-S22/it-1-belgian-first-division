@@ -77,9 +77,14 @@ public class Server {
     // of the HTTP request
     server.post("/api/users", userController::addNewUser);
 
+
+
     server.get("/api/products", productController::getProducts);
 
     server.get("/api/products/{id}", productController::getProduct);
+
+    server.post("/api/products", productController::addNewProduct);
+
 
     // This catches any uncaught exceptions thrown in the server
     // code and turns them into a 500 response ("Internal Server
