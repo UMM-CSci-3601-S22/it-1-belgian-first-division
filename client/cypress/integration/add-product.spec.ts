@@ -38,7 +38,7 @@ describe('Add product', () => {
     cy.get('[data-test=nameError]').should('exist').and('be.visible');
     // Some more tests for various invalid name inputs
     page.getFormField('name').type('J').blur();
-    cy.get('[data-test=nameError]').should('exist').and('be.visible');
+    cy.get('[data-test=nameError]').should('not.exist');
     page.getFormField('name').clear().type('This is a very long name that goes beyond the 50 character limit').blur();
     cy.get('[data-test=nameError]').should('exist').and('be.visible');
     // Entering a valid name should remove the error.
@@ -54,7 +54,7 @@ describe('Add product', () => {
     cy.get('[data-test=storeError]').should('exist').and('be.visible');
     // Some more tests for various invalid description inputs
     page.getFormField('store').type('J').blur();
-    cy.get('[data-test=storeError]').should('exist').and('be.visible');
+    cy.get('[data-test=storeError]').should('not.exist');
     page.getFormField('store').clear().type('This is a very long store that goes beyond the 50 character limit').blur();
     cy.get('[data-test=storeError]').should('exist').and('be.visible');
     // Entering a valid store should remove the error.
@@ -70,7 +70,7 @@ describe('Add product', () => {
     cy.get('[data-test=brandError]').should('exist').and('be.visible');
     // Some more tests for various invalid brand inputs
     page.getFormField('brand').type('J').blur();
-    cy.get('[data-test=brandError]').should('exist').and('be.visible');
+    cy.get('[data-test=brandError]').should('not.exist');
     page.getFormField('brand').clear().type('This is a very long brand that goes beyond the 50 character limit').blur();
     cy.get('[data-test=brandError]').should('exist').and('be.visible');
     // Entering a valid brand should remove the error.

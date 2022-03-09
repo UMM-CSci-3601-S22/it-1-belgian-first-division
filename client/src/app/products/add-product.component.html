@@ -43,7 +43,7 @@
 
         <mat-form-field>
           <mat-label>Lifespan</mat-label>
-          <input matInput placeholder="Lifespan" formControlName="lifespan" required>
+          <input matInput placeholder="Lifespan" formControlName="lifespan">
           <mat-error *ngFor="let validation of addProductValidationMessages.lifespan">
             <mat-error class="error-message" data-test="lifespanError"
                 *ngIf="addProductForm.get('lifespan').hasError(validation.type) && (addProductForm.get('lifespan').dirty || addProductForm.get('lifespan').touched)">
@@ -54,7 +54,7 @@
 
         <mat-form-field>
           <mat-label>Threshold</mat-label>
-          <input matInput placeholder="Threshold" formControlName="threshold" required>
+          <input matInput placeholder="Threshold" formControlName="threshold">
           <mat-error *ngFor="let validation of addProductValidationMessages.threshold">
             <mat-error class="error-message" data-test="thresholdError"
                 *ngIf="addProductForm.get('threshold').hasError(validation.type) && (addProductForm.get('threshold').dirty || addProductForm.get('threshold').touched)">
