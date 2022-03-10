@@ -6,13 +6,15 @@
   </mat-card-header>
 
   <mat-card-content *ngIf="!this.simple">
-    <h2>Category: {{this.product.category}}</h2>
-    <h2>Store: {{this.product.store}}</h2>
-    <p>Location: {{this.product.location}}</p>
+    <h4 class="product-card-category">Category: {{this.product.category}}</h4>
+    <h4 class="product-card-store">Store: {{this.product.store}}</h4>
+    <p class="product-card-location">Location: {{this.product.location}}</p>
+    <h3 class="product-card-lifespan">Lifespan: {{this.product.lifespan}}</h3>
+    <h3 class="product-card-threshold">Threshold: {{this.product.lifespan}}</h3>
 
     <div>
-      <h2>Notes</h2>
-      <p>{{this.product.notes}}</p>
+      <h4>Notes</h4>
+      <p class="product-card-notes">{{this.product.notes}}</p>
     </div>
   </mat-card-content>
 </mat-card>

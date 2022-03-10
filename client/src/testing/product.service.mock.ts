@@ -37,4 +37,15 @@ export class MockProductService extends ProductService {
   getProducts(filters: { name: string }): Observable<Product[]> {
     return of(MockProductService.testProducts);
   }
+
+  getProductById(id: string): Observable<Product> {
+    // If the specified ID is for the first test product,
+    // return that product, otherwise return `null` so
+    // we can test illegal product requests.
+    if (id === MockProductService.testProducts[0]._id) {
+      return of(MockProductService.testProducts[0]);
+    } else {
+      return of(null);
+    }
+  }
 }
