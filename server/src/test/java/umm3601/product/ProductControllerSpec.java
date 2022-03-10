@@ -377,11 +377,10 @@ public class ProductControllerSpec {
   }
 
   @Test
-  public void addNullLocationProduct() throws IOException {
+  public void addNullBrandProduct() throws IOException {
     String testNewProduct = "{"
         + "\"name\": \"Turkey - XXL\","
         + "\"description\": \"Homegrown Morris Turkey\","
-        + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
         + "\"store\": \"Willie's\","
         + "\"notes\": \"Don't eat the turkey Nic McPhee\","
@@ -441,14 +440,14 @@ public class ProductControllerSpec {
   }
 
   @Test
-  public void addInvalidLocationProduct() throws IOException {
+  public void addInvalidBrandProduct() throws IOException {
     String testNewProduct = "{"
         + "\"name\": \"Turkey - XXL\","
         + "\"description\": \"Homegrown Morris Turkey\","
-        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"brand\": \"\","
         + "\"category\": \"meat\","
         + "\"store\": \"Willie's\","
-        + "\"location\": \"\","
+        + "\"location\": \"Here\","
         + "\"notes\": \"Don't eat the turkey Nic McPhee\""
         + "}";
     mockReq.setBodyContent(testNewProduct);
@@ -473,6 +472,29 @@ public class ProductControllerSpec {
         + "\"notes\": \"Don't eat the turkey Nic McPhee\","
         + "\"lifespan\": -2,"
         + "\"threshold\": 10"
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addInvalidThresholdProduct() throws IOException {
+    String testNewProduct = "{"
+        + "\"name\": \"Turkey - XXL\","
+        + "\"description\": \"Homegrown Morris Turkey\","
+        + "\"brand\": \"The CSCI Dungeon\","
+        + "\"category\": \"meat\","
+        + "\"store\": \"Willie's\","
+        + "\"location\": \"\","
+        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
+        + "\"lifespan\": 2,"
+        + "\"threshold\": -10"
         + "}";
     mockReq.setBodyContent(testNewProduct);
     mockReq.setMethod("POST");

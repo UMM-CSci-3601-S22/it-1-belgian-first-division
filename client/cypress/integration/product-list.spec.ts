@@ -23,12 +23,12 @@ describe('Product List', () => {
 
     // All of the listed products should have the name we are filtering by
     page.getProductListItems().each(e => {
-   cy.wrap(e).find('.product-list-name').should('contain', 'Sobe - Orange Carrot');
+   cy.wrap(e).find('.product-list-name').should('have.text', 'Sobe - Orange Carrot');
     });
 
     // Secondary check to see if listed products have specified name
     page.getProductListItems().find('.product-list-name').each(el =>
-      expect(el.text()).to.equal(' Sobe - Orange Carrot ')
+      expect(el.text()).to.equal('Sobe - Orange Carrot')
     );
   });
 
@@ -46,8 +46,8 @@ describe('Product List', () => {
       cy.url().should('match', /\/products\/[0-9a-fA-F]{24}$/);
 
       // On this profile page we were sent to, the name and brand should be correct
-      cy.get('.product-card-name').first().should('has.text', firstProductName);
-      cy.get('.product-card-brand').first().should('has.text', firstProductBrand);
+      cy.get('.product-card-name').first().should('have.text', firstProductName);
+      cy.get('.product-card-brand').first().should('have.text', firstProductBrand);
     });
   });
 

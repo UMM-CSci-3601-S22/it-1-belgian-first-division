@@ -30,7 +30,7 @@ describe('Add product', () => {
     // all the required fields have valid input, then it should be enabled
   });
 
-  it('Should show error messbrands for invalid inputs', () => {
+  it('Should show error messages for invalid inputs', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=nameError]').should('not.exist');
     // Just clicking the name field without entering anything should cause an error message
@@ -46,7 +46,7 @@ describe('Add product', () => {
     cy.get('[data-test=nameError]').should('not.exist');
   });
 
-  it('Should show error messbrands for invalid inputs', () => {
+  it('Should show error messages for invalid inputs', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=storeError]').should('not.exist');
     // Just clicking the description field without entering anything should cause an error message
@@ -62,7 +62,7 @@ describe('Add product', () => {
     cy.get('[data-test=storeError]').should('not.exist');
   });
 
-  it('Should show error messbrands for invalid inputs', () => {
+  it('Should show error messages for invalid inputs', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=brandError]').should('not.exist');
     // Just clicking the brand field without entering anything should cause an error message
@@ -105,9 +105,9 @@ describe('Add product', () => {
       // The new product should have all the same attributes as we entered
       cy.get('.product-card-name').should('have.text', product.name);
       cy.get('.product-card-brand').should('have.text', product.brand);
-      cy.get('.product-card-store').should('have.text', product.store);
-      cy.get('.product-card-lifespan').should('have.text', product.lifespan);
-      cy.get('.product-card-threshold').should('have.text', product.threshold);
+      cy.get('.product-card-store').should('have.text', 'Store: ' + product.store);
+      cy.get('.product-card-lifespan').should('have.text', 'Lifespan: ' + product.lifespan);
+      cy.get('.product-card-threshold').should('have.text', 'Threshold: ' + product.threshold);
 
       // We should see the confirmation message at the bottom of the screen
       cy.get('.mat-simple-snackbar').should('contain', `Added Product ${product.name}`);
