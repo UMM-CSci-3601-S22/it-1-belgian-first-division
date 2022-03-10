@@ -1,6 +1,7 @@
 export interface Product {
 
   _id: string;
+
   name: string;
   description?: string;
   brand?: string;
@@ -8,5 +9,6 @@ export interface Product {
   store?: string;
   location?: string;
   notes?: string;
-  tags?: string[];
+  lifespan?: number;
+  threshold?: number;
 }
