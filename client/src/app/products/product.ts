@@ -2,13 +2,13 @@ export interface Product {
 
   _id: string;
 
-  name: string;
-  description?: string;
-  brand?: string;
-  category?: string;
-  store?: string;
-  location?: string;
-  notes?: string;
-  lifespan?: number;
-  threshold?: number;
+  title: string;
+  genre: string;
+  platform: string;
+  publisher: string;
+  developer: string;
+  releaseYear: number;
+  contentRating: string;
+  unitsSold: number;
+  totalRevenue: number;
 }

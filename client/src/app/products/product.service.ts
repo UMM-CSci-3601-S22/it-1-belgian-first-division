@@ -14,30 +14,26 @@ export class ProductService {
   constructor(private httpClient: HttpClient ) {
   }
 
-  filterProducts(products: Product[], filters: { name?: string }): Product[] {
+  filterProducts(products: Product[], filters: { title: string }): Product[] {
 
     let filteredProducts = products;
 
-    // Filter by name
-    if (filters.name) {
-      filters.name = filters.name.toLowerCase();
+    // Filter by title
+    if (filters.title) {
+      filters.title = filters.title.toLowerCase();
 
-      filteredProducts = filteredProducts.filter(product => product.name.toLowerCase().indexOf(filters.name) !== -1);
+      filteredProducts = filteredProducts.filter(product => product.title.toLowerCase().indexOf(filters.title) !== -1);
     }
 
     return filteredProducts;
   }
 
-  getProductById(id: string): Observable<Product> {
-    return this.httpClient.get<Product>(this.productUrl + '/' + id);
-  }
-
-  getProducts(filters?: { name?: string }): Observable<Product[]> {
+  getProducts(filters?: { title?: string }): Observable<Product[]> {
     let httpParams: HttpParams = new HttpParams();
 
     if (filters) {
-      if (filters.name) {
-        httpParams = httpParams.set('name', filters.name);
+      if (filters.title) {
+        httpParams = httpParams.set('title', filters.title);
       }
     }
 
@@ -46,7 +42,4 @@ export class ProductService {
     });
   }
 
-  addProduct(newProduct: Product): Observable<string> {
-    return this.httpClient.post<{id: string}>(this.productUrl, newProduct).pipe(map(res => res.id));
-  }
 }

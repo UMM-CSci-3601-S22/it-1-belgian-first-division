@@ -13,8 +13,7 @@ import org.bson.UuidRepresentation;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.InternalServerErrorResponse;
-import umm3601.user.UserController;
-import umm3601.product.ProductController;
+import umm3601.game.GameController;
 
 public class Server {
 
@@ -42,9 +41,7 @@ public class Server {
     MongoDatabase database = mongoClient.getDatabase(databaseName);
 
     // Initialize dependencies
-    UserController userController = new UserController(database);
-
-    ProductController productController = new ProductController(database);
+    GameController gameController = new GameController(database);
 
     Javalin server = Javalin.create(config ->
       config.registerPlugin(new RouteOverviewPlugin("/api"))
@@ -64,26 +61,9 @@ public class Server {
 
     server.start(SERVER_PORT);
 
-    // List users, filtered using query parameters
-    server.get("/api/users", userController::getUsers);
+    server.get("/api/games", gameController::getGames);
 
-    // Get the specified user
-    server.get("/api/users/{id}", userController::getUser);
-
-    // Delete the specified user
-    server.delete("/api/users/{id}", userController::deleteUser);
-
-    // Add new user with the user info being in the JSON body
-    // of the HTTP request
-    server.post("/api/users", userController::addNewUser);
-
-
-
-    server.get("/api/products", productController::getProducts);
-
-    server.get("/api/products/{id}", productController::getProduct);
-
-    server.post("/api/products", productController::addNewProduct);
+    server.get("/api/games/{id}", gameController::getGame);
 
 
     // This catches any uncaught exceptions thrown in the server
@@ -91,7 +71,7 @@ public class Server {
     // Error Response"). In general you'll like to *never* actually
     // return this, as it's an instance of the server crashing in
     // some way, and returning a 500 to your user is *super*
-    // unhelpful to them. In a production system you'd almost
+    // unhelpful to them. In a gameion system you'd almost
     // certainly want to use a logging library to log all errors
     // caught here so you'd know about them and could try to address
     // them.
