@@ -27,11 +27,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
-import { ProductProfileComponent } from './products//product-profile.component';
-import { ProductListComponent } from './products/product-list.component';
-import { ProductCardComponent } from './products/product-card.component';
-import { ProductService } from './products/product.service';
-import { AddProductComponent } from './products/add-product.component';
+import { GameListComponent } from './games/game-list.component';
+import { GameService } from './games/game.service';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -56,11 +53,7 @@ const MATERIAL_MODULES: any[] = [
   declarations: [
     AppComponent,
     HomeComponent,
-    AddProductComponent,
-    ProductProfileComponent,
-    ProductListComponent,
-    ProductCardComponent,
-    AddProductComponent,
+    GameListComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +67,7 @@ const MATERIAL_MODULES: any[] = [
     LayoutModule,
   ],
   providers: [
-    ProductService,
+    GameService,
   ],
   bootstrap: [AppComponent]
 })

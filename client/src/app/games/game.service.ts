@@ -2,33 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Product } from './product';
+import { Game } from './game';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
-  readonly productUrl: string = environment.apiUrl + 'products';
+export class GameService {
+  readonly gameURL: string = environment.apiUrl + 'games';
 
   constructor(private httpClient: HttpClient ) {
   }
 
-  filterProducts(products: Product[], filters: { title: string }): Product[] {
+  filteredGames(games: Game[], filters: { title: string, genre: string }): Game[] {
 
-    let filteredProducts = products;
+    let filteredGames = games;
 
     // Filter by title
     if (filters.title) {
       filters.title = filters.title.toLowerCase();
 
-      filteredProducts = filteredProducts.filter(product => product.title.toLowerCase().indexOf(filters.title) !== -1);
+      filteredGames = filteredGames.filter(game => game.title.toLowerCase().indexOf(filters.title) !== -1);
     }
 
-    return filteredProducts;
+    return filteredGames;
   }
 
-  getProducts(filters?: { title?: string }): Observable<Product[]> {
+  getGames(filters?: { title?: string, genre?: string }): Observable<Game[]> {
     let httpParams: HttpParams = new HttpParams();
 
     if (filters) {
@@ -37,9 +37,11 @@ export class ProductService {
       }
     }
 
-    return this.httpClient.get<Product[]>(this.productUrl, {
+    return this.httpClient.get<Game[]>(this.gameURL, {
       params: httpParams,
     });
   }
 
 }
+
+
